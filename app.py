@@ -212,7 +212,7 @@ Receive your custom beginner roadmap directly on WhatsApp.
 
 Includes:
 - 90-day checklist
-- Free learning resources
+- Free Earning resources
 - Portfolio project suggestions
 - Beginner-friendly earning paths
 """)
