@@ -7,7 +7,7 @@ from datetime import datetime
 # -----------------------------
 # FILE STORAGE
 # -----------------------------
-DATA_FILE = "leads.csv"
+DATA_FILE = "lead_database.csv"
 
 # -----------------------------
 # PAGE CONFIG
@@ -29,7 +29,6 @@ st.markdown("""
     max-width: 850px;
 }
 
-/* Gradient Header */
 .gradient-text {
     font-size: 46px;
     font-weight: 900;
@@ -39,7 +38,6 @@ st.markdown("""
     margin-bottom: 8px;
 }
 
-/* Card */
 .roadmap-card {
     background: rgba(30,41,59,0.45);
     backdrop-filter: blur(14px);
@@ -50,17 +48,15 @@ st.markdown("""
     margin: 18px 0;
 }
 
-/* Income Highlight Box */
 .income-box {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(5, 150, 105, 0.12));
-    border: 1px solid rgba(16, 185, 129, 0.35);
+    background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(5,150,105,0.12));
+    border: 1px solid rgba(16,185,129,0.35);
     border-radius: 14px;
     padding: 20px;
     margin: 18px 0;
     color: #10B981;
 }
 
-/* Tags */
 .direction-tag {
     display:inline-block;
     padding:8px 16px;
@@ -73,19 +69,10 @@ st.markdown("""
     border:1px solid rgba(34,211,238,.25);
 }
 
-/* Divider */
 .glow-divider {
     height:2px;
     background:linear-gradient(90deg, transparent, rgba(6,182,212,.5), transparent);
     margin:28px 0;
-}
-
-/* Progress card */
-.progress-box {
-    background: rgba(15,23,42,0.6);
-    padding:16px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,0.05);
 }
 </style>
 """, unsafe_allow_html=True)
@@ -111,10 +98,7 @@ progress = st.progress(33)
 col1, col2 = st.columns(2)
 
 with col1:
-    available_hours = st.slider(
-        "How many hours can you dedicate daily?",
-        1, 6, 2
-    )
+    available_hours = st.slider("How many hours can you dedicate daily?", 1, 6, 2)
 
     current_skills = st.selectbox(
         "Your current skill level",
@@ -156,138 +140,35 @@ with col2:
 direction_data = {
     "🎯 Career & Skill Development": {
         "path": "Professional Career Scaling",
-        "est_pay": "₹8,000 - ₹15,000 / month per project",
-        "gig_breakdown": "Local startups and growing agencies actively pay per-project rates for running basic remote coordination, handling task backlogs, and formatting internal operational documents.",
-        "stages": [
-            "🏆 Month 1: Learn workplace tools & workflow systems",
-            "📈 Month 2: Build project management structures",
-            "✨ Month 3: Create portfolio case studies"
-        ],
-        "directions": [
-            "Project Coordination",
-            "Research Assistance",
-            "Documentation Systems",
-            "Remote Operations"
-        ]
+        "est_pay": "₹8,000 - ₹15,000 / month"
     },
-
     "💼 Business & Entrepreneurship": {
         "path": "Digital Business Building",
-        "est_pay": "₹12,000 - ₹25,000 / month",
-        "gig_breakdown": "Independent e-commerce shops, course creators, and service providers hire remote assistants to securely organize incoming orders, track databases, and follow up with digital customer leads.",
-        "stages": [
-            "🏆 Month 1: Learn business models",
-            "📈 Month 2: Build landing funnels",
-            "✨ Month 3: Launch your first offer"
-        ],
-        "directions": [
-            "Lead Generation",
-            "Business Operations",
-            "Workflow Setup",
-            "Client Acquisition"
-        ]
+        "est_pay": "₹12,000 - ₹25,000 / month"
     },
-
     "💰 Finance & Money Management": {
         "path": "Financial Systems Design",
-        "est_pay": "₹15,000 - ₹30,000 / custom dashboard setup",
-        "gig_breakdown": "Small business owners, retail outlets, and online creators pay great premiums for clean, customized spreadsheets to log daily expenditures, monitor product inventory, and view monthly sales profiles.",
-        "stages": [
-            "🏆 Month 1: Spreadsheet mastery",
-            "📈 Month 2: Dashboard systems",
-            "✨ Month 3: Build finance templates"
-        ],
-        "directions": [
-            "Budget Tracking",
-            "Financial Dashboards",
-            "Data Reporting",
-            "Automation Sheets"
-        ]
+        "est_pay": "₹15,000 - ₹30,000 / project"
     },
-
     "📢 Marketing, Sales & Communication": {
         "path": "Digital Growth Marketing",
-        "est_pay": "₹10,000 - ₹20,000 / month per client",
-        "gig_breakdown": "Budding brands and local consulting businesses look for digital support to write clean email copy, build outreach lists, structure sales pitches, and manage promotional campaign sequences.",
-        "stages": [
-            "🏆 Month 1: Copywriting basics",
-            "📈 Month 2: Funnel systems",
-            "✨ Month 3: Campaign analytics"
-        ],
-        "directions": [
-            "Email Marketing",
-            "Content Funnels",
-            "Brand Outreach",
-            "Campaign Metrics"
-        ]
+        "est_pay": "₹10,000 - ₹20,000 / month"
     },
-
     "👥 Lifestyle & Personal Growth": {
         "path": "Productivity Systems",
-        "est_pay": "₹5,000 - ₹12,000 / tailored dashboard setup",
-        "gig_breakdown": "Busy founders, creative directors, and fast-paced teams commission remote assistance to configure customized daily planners, structure collaborative calendars, and clean up digital work hubs.",
-        "stages": [
-            "🏆 Month 1: Digital planning",
-            "📈 Month 2: Habit systems",
-            "✨ Month 3: Build optimization templates"
-        ],
-        "directions": [
-            "Planner Design",
-            "Routine Optimization",
-            "Schedule Systems",
-            "Productivity Templates"
-        ]
+        "est_pay": "₹5,000 - ₹12,000 / setup"
     },
-
     "🎨 Creative Arts & Content Creation": {
         "path": "Content Design & Creation",
-        "est_pay": "₹12,000 - ₹22,000 / month per account",
-        "gig_breakdown": "Local companies (cafes, boutique gyms, realtors) pay monthly retainers for remote managers to design social graphics, draft video captions, schedule posts, and reply to inbound comments.",
-        "stages": [
-            "🏆 Month 1: Design fundamentals",
-            "📈 Month 2: Content workflows",
-            "✨ Month 3: Portfolio creation"
-        ],
-        "directions": [
-            "Graphic Design",
-            "Video Editing",
-            "Social Content",
-            "Visual Branding"
-        ]
+        "est_pay": "₹12,000 - ₹22,000 / month"
     },
-
     "🤝 Social Impact & Helping Others": {
         "path": "Community Coordination",
-        "est_pay": "₹8,000 - ₹18,000 / month part-time",
-        "gig_breakdown": "Training platforms, NGOs, and professional student networks pay remote coordinators to keep their group chats organized, answer basic customer FAQs, and run online event operations.",
-        "stages": [
-            "🏆 Month 1: Community systems",
-            "📈 Month 2: Event workflows",
-            "✨ Month 3: Resource coordination"
-        ],
-        "directions": [
-            "Community Moderation",
-            "Newsletter Systems",
-            "Event Coordination",
-            "Volunteer Ops"
-        ]
+        "est_pay": "₹8,000 - ₹18,000 / month"
     },
-
     "🌐 Explore All Areas": {
         "path": "Universal Digital Foundations",
-        "est_pay": "₹7,000 - ₹15,000 / month baseline",
-        "gig_breakdown": "General remote gigs rely on simple digital flexibility: inputting clear inventory data, proofreading written copy drafts, organizing file structures, and handling routine business updates.",
-        "stages": [
-            "🏆 Month 1: Learn core tools",
-            "📈 Month 2: Connect systems",
-            "✨ Month 3: Pick specialization"
-        ],
-        "directions": [
-            "Virtual Assistance",
-            "Basic Data Work",
-            "Content Support",
-            "Digital Operations"
-        ]
+        "est_pay": "₹7,000 - ₹15,000 / month"
     }
 }
 
@@ -302,7 +183,7 @@ st.markdown("## 📊 Step 2: Your 90-Day Roadmap")
 
 progress.progress(66)
 
-st.info(f"⏳ You have **{total_hours} focused hours** available over the next 90 days.")
+st.info(f"⏳ You have **{total_hours} focused hours** available.")
 
 st.markdown(f"""
 <div class="roadmap-card">
@@ -313,27 +194,10 @@ st.markdown(f"""
 
 st.markdown(f"""
 <div class="income-box">
-    <h4 style="margin-top: 0;">💰 Estimated Side-Income Potential</h4>
-    <p style="font-size: 22px; font-weight: 800;">{selected['est_pay']}</p>
-    <p>{selected['gig_breakdown']}</p>
+<h4>💰 Estimated Side-Income Potential</h4>
+<p style="font-size:22px;font-weight:800;">{selected['est_pay']}</p>
 </div>
 """, unsafe_allow_html=True)
-
-for stage in selected["stages"]:
-    st.markdown(stage)
-
-st.markdown("### 🚀 Career Directions")
-
-tags = "".join(
-    [f'<span class="direction-tag">{d}</span>' for d in selected["directions"]]
-)
-
-st.markdown(tags, unsafe_allow_html=True)
-
-if current_skills == "Complete Beginner":
-    st.warning("Start with one foundational tool and focus on consistency.")
-elif current_skills == "Technical Foundations":
-    st.success("You can accelerate faster by building portfolio projects immediately.")
 
 # -----------------------------
 # STEP 3
@@ -343,15 +207,29 @@ st.markdown("## 📥 Step 3: Get Your Free Skill Blueprint")
 
 progress.progress(100)
 
+st.write("""
+Receive your custom beginner roadmap directly on WhatsApp.
+
+Includes:
+- 90-day checklist
+- Free learning resources
+- Portfolio project suggestions
+- Beginner-friendly earning paths
+""")
+
+# -----------------------------
+# FORM
+# -----------------------------
 with st.form("lead_form", clear_on_submit=True):
+
     first_name = st.text_input("First Name")
     whatsapp_num = st.text_input("WhatsApp Number")
 
     consent = st.checkbox(
-        "I agree to receive my custom roadmap and occasional learning updates."
+        "I agree to receive my roadmap and learning updates."
     )
 
-    submit = st.form_submit_button("🚀 Get my Free Consultation")
+    submit = st.form_submit_button("🚀 Get My Free Consultation")
 
 # -----------------------------
 # VALIDATION
@@ -397,7 +275,7 @@ if submit:
 
 Your personalized roadmap is being prepared.
 
-You’re officially on your way toward building:
+You're officially on your way toward:
 **{selected['path']}**
 """)
 
@@ -407,4 +285,5 @@ You’re officially on your way toward building:
 # FOOTER
 # -----------------------------
 st.markdown('<div class="glow-divider"></div>', unsafe_allow_html=True)
+
 st.caption("Built for ambitious students who want practical digital career growth.")
