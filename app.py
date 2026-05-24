@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
-import re
+import requests
 from datetime import datetime
 
 # -----------------------------
@@ -245,30 +245,27 @@ if submit:
 
     if not first_name.strip():
         st.error("Please enter your name.")
+
     elif not valid_phone(whatsapp_num):
         st.error("Enter a valid WhatsApp number.")
+
     elif not consent:
         st.error("Please give consent.")
+
     else:
-        payload = {
-            "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "Name": first_name.strip(),
-            "WhatsApp": whatsapp_num,
-            "Hours": available_hours,
-            "Skill Level": current_skills,
-            "Interest": user_interest,
-            "Goal": primary_goal
+        import requests
+
+        form_url = "https://docs.google.com/forms/d/e/1FAIpQLSdt3gJJK4_SiivkMX5VGVxDljuSrzpbtADXh1DqUknuNcxkQw/formResponse"
+
+        form_data = {
+            "entry.42428905": first_name,
+            "entry.1974958050": whatsapp_num,
+            "entry.1294238968": str(available_hours),
+            "entry.1711852881": user_interest,
+            "entry.137205597": primary_goal
         }
 
-        new_df = pd.DataFrame([payload])
-
-        if os.path.exists(DATA_FILE):
-            existing = pd.read_csv(DATA_FILE)
-            updated = pd.concat([existing, new_df], ignore_index=True)
-        else:
-            updated = new_df
-
-        updated.to_csv(DATA_FILE, index=False)
+        requests.post(form_url, data=form_data)
 
         st.success(f"""
 🎉 Success, {first_name}!
