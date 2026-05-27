@@ -259,7 +259,7 @@ if submit:
         st.error("Please enter your name.")
 
     elif not valid_phone(whatsapp_num):
-        st.error("Please enter a valid 10-digit Indian WhatsApp number (e.g., 9876543210).")
+        st.error("Please enter a valid 10-digit WhatsApp number (e.g., 9876543210).")
 
     elif not consent:
         st.error("Please provide your authorization checkbox confirmation.")
