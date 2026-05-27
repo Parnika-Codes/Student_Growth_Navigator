@@ -235,11 +235,20 @@ with st.form("lead_form", clear_on_submit=True):
     submit = st.form_submit_button("🚀 Get My Free Consultation Setup")
 
 # -----------------------------
-# VALIDATION
+# VALIDATION (Strict Indian Numbers Only)
 # -----------------------------
 def valid_phone(phone):
+    # Remove all non-numeric characters (spaces, hyphens, plus signs)
     cleaned = re.sub(r"\D", "", phone)
-    return len(cleaned) >= 10
+    
+    # Strip away country prefix versions if included
+    if len(cleaned) == 12 and cleaned.startswith("91"):
+        cleaned = cleaned[2:]
+    elif len(cleaned) == 13 and cleaned.startswith("0091"):
+        cleaned = cleaned[4:]
+        
+    # Must be exactly 10 digits and start with a valid Indian mobile digit (6-9)
+    return bool(re.match(r"^[6-9]\d{9}$", cleaned))
 
 # -----------------------------
 # LIVE SAVE EXECUTION
@@ -250,13 +259,13 @@ if submit:
         st.error("Please enter your name.")
 
     elif not valid_phone(whatsapp_num):
-        st.error("Enter a valid WhatsApp number.")
+        st.error("Please enter a valid 10-digit Indian WhatsApp number (e.g., 9876543210).")
 
     elif not consent:
         st.error("Please provide your authorization checkbox confirmation.")
 
     else:
-        # Perfectly mapped endpoint URL for your active form
+        # Mapped endpoint URL for your active form
         form_url = "https://docs.google.com/forms/d/e/1FAIpQLSdt3gJJK4_SiivkMX5VGVxDljuSrzpbtADXh1DqUknuNcxkQw/formResponse"
 
         form_data = {
@@ -269,7 +278,15 @@ if submit:
 
         try:
             # Pushing content directly to the live response spreadsheet
-            requests.post(form_url, data=form_data)
+            response = requests.post(form_url, data=form_data)
+            
+            # Failsafe local backup engine if the post response isn't a clean 200
+            if response.status_code != 200:
+                df = pd.DataFrame([{
+                    "Timestamp": datetime.now(), "Name": first_name, "Phone": whatsapp_num,
+                    "Hours": available_hours, "Track": user_interest, "Goal": primary_goal
+                }])
+                df.to_csv(DATA_FILE, mode='a', header=not os.path.exists(DATA_FILE), index=False)
         except Exception as e:
             pass
 
