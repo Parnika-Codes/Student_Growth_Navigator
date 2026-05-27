@@ -79,7 +79,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# HEADER (UPGRADED TO UNIVERSAL BRANDING)
+# HEADER
 # -----------------------------
 st.markdown('<h1 class="gradient-text">🧭 Omni Skill Growth Navigator</h1>', unsafe_allow_html=True)
 
@@ -203,7 +203,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# STEP 3: UNIVERSAL CALL TO ACTION
+# STEP 3
 # -----------------------------
 st.markdown('<div class="glow-divider"></div>', unsafe_allow_html=True)
 st.markdown("## 📥 Step 3: Secure Strategy Access")
@@ -256,7 +256,7 @@ if submit:
         st.error("Please provide your authorization checkbox confirmation.")
 
     else:
-        # Your seamless backend Google form webhook logic
+        # Perfectly mapped endpoint URL for your active form
         form_url = "https://docs.google.com/forms/d/e/1FAIpQLSdt3gJJK4_SiivkMX5VGVxDljuSrzpbtADXh1DqUknuNcxkQw/formResponse"
 
         form_data = {
@@ -268,9 +268,10 @@ if submit:
         }
 
         try:
+            # Pushing content directly to the live response spreadsheet
             requests.post(form_url, data=form_data)
         except Exception as e:
-            pass # Failsafe to protect user interface continuity
+            pass
 
         st.success(f"""
 🎉 Success, {first_name}!
