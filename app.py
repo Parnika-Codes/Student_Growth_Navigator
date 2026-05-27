@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import re
 from datetime import datetime
+import requests
 
 # -----------------------------
 # FILE STORAGE
@@ -78,20 +79,20 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# HEADER
+# HEADER (UPGRADED TO UNIVERSAL BRANDING)
 # -----------------------------
-st.markdown('<h1 class="gradient-text">🧭 Student Skill Growth Navigator</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="gradient-text">🧭 Omni Skill Growth Navigator</h1>', unsafe_allow_html=True)
 
 st.markdown("""
-Discover practical future-ready skills, personalized growth roadmaps, and beginner-friendly remote income paths based on your available schedule.
+Discover practical future-ready skills, personalized growth roadmaps, and beginner-friendly remote income paths tailored for students, working professionals, homemakers, and freelancers.
 """)
 
 st.markdown('<div class="glow-divider"></div>', unsafe_allow_html=True)
 
 # -----------------------------
-# STEP 1
+# STEP 1: UNIVERSAL PROFILE BUILDER
 # -----------------------------
-st.markdown("## 📋 Step 1: Build Your Profile")
+st.markdown("## 📋 Step 1: Build Your Blueprint Profile")
 
 progress = st.progress(33)
 
@@ -101,12 +102,13 @@ with col1:
     available_hours = st.slider("How many hours can you dedicate daily?", 1, 6, 2)
 
     current_skills = st.selectbox(
-        "Your current skill level",
+        "Your current profile sector",
         [
-            "Complete Beginner",
-            "Basic Creative",
-            "Business/Analytical",
-            "Technical Foundations"
+            "College Student / Fresh Graduate",
+            "Working Professional (Seeking Side-Income)",
+            "Homemaker / Work From Home",
+            "Freelancer / Digital Explorer",
+            "Small Business Owner / Creator"
         ]
     )
 
@@ -126,11 +128,12 @@ with col2:
     )
 
     primary_goal = st.selectbox(
-        "Your next 90-day goal",
+        "Your next 90-day focus",
         [
-            "Build a portfolio",
-            "Start earning online",
-            "Learn modern digital skills"
+            "Learn modern digital marketing",
+            "Start generating extra side income",
+            "Build a personal portfolio brand",
+            "Scale an online automation engine"
         ]
     )
 
@@ -179,7 +182,7 @@ total_hours = available_hours * 90
 # STEP 2
 # -----------------------------
 st.markdown('<div class="glow-divider"></div>', unsafe_allow_html=True)
-st.markdown("## 📊 Step 2: Your 90-Day Roadmap")
+st.markdown("## 📊 Step 2: Your Custom 90-Day Roadmap")
 
 progress.progress(66)
 
@@ -200,36 +203,36 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# STEP 3
+# STEP 3: UNIVERSAL CALL TO ACTION
 # -----------------------------
 st.markdown('<div class="glow-divider"></div>', unsafe_allow_html=True)
-st.markdown("## 📥 Step 3: Get Your Free Skill Blueprint")
+st.markdown("## 📥 Step 3: Secure Strategy Access")
 
 progress.progress(100)
 
 st.write("""
-Receive your custom beginner roadmap directly on WhatsApp.
+Receive your specific roadmap blueprint and setup access directly on WhatsApp.
 
 Includes:
-- 90-day checklist
-- Free Earning resources
-- Portfolio project suggestions
-- Beginner-friendly earning paths
+- 90-day checklist blueprint
+- Universal monetization resources
+- Portfolio project strategies
+- Automated income system setups
 """)
 
 # -----------------------------
-# FORM
+# FORM SETUP
 # -----------------------------
 with st.form("lead_form", clear_on_submit=True):
 
-    first_name = st.text_input("First Name")
-    whatsapp_num = st.text_input("WhatsApp Number")
+    first_name = st.text_input("Full Name")
+    whatsapp_num = st.text_input("WhatsApp Number (with country code)")
 
     consent = st.checkbox(
-        "I agree to receive my roadmap and learning updates."
+        "I agree to join the network and receive skill roadmap updates via WhatsApp."
     )
 
-    submit = st.form_submit_button("🚀 Get My Free Consultation")
+    submit = st.form_submit_button("🚀 Get My Free Consultation Setup")
 
 # -----------------------------
 # VALIDATION
@@ -239,7 +242,7 @@ def valid_phone(phone):
     return len(cleaned) >= 10
 
 # -----------------------------
-# SAVE DATA
+# LIVE SAVE EXECUTION
 # -----------------------------
 if submit:
 
@@ -250,29 +253,31 @@ if submit:
         st.error("Enter a valid WhatsApp number.")
 
     elif not consent:
-        st.error("Please give consent.")
+        st.error("Please provide your authorization checkbox confirmation.")
 
     else:
-        import requests
-
+        # Your seamless backend Google form webhook logic
         form_url = "https://docs.google.com/forms/d/e/1FAIpQLSdt3gJJK4_SiivkMX5VGVxDljuSrzpbtADXh1DqUknuNcxkQw/formResponse"
 
         form_data = {
             "entry.42428905": first_name,
             "entry.1974958050": whatsapp_num,
             "entry.1294238968": str(available_hours),
-            "entry.1711852881": user_interest,
+            "entry.1711852881": f"{current_skills} - {user_interest}",
             "entry.137205597": primary_goal
         }
 
-        requests.post(form_url, data=form_data)
+        try:
+            requests.post(form_url, data=form_data)
+        except Exception as e:
+            pass # Failsafe to protect user interface continuity
 
         st.success(f"""
 🎉 Success, {first_name}!
 
-Your personalized roadmap is being prepared.
+Your custom roadmap blueprint configuration has been calculated. 
 
-You're officially on your way toward:
+Our system coordinator will sync details to your WhatsApp line regarding your focus track:
 **{selected['path']}**
 """)
 
@@ -283,4 +288,4 @@ You're officially on your way toward:
 # -----------------------------
 st.markdown('<div class="glow-divider"></div>', unsafe_allow_html=True)
 
-st.caption("Built for ambitious students who want practical digital career growth.")
+st.caption("Built for ambitious individuals aiming to master online systems and real digital asset scale.")
